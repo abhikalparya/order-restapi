@@ -1,0 +1,100 @@
+Table: order_header
+
+CREATE TABLE `restapi`.`order_header` (
+  `order_id` VARCHAR(20) NOT NULL,
+  `order_name` VARCHAR(255) DEFAULT NULL,
+  `placed_date` DATETIME DEFAULT NULL,
+  `approved_date` DATETIME DEFAULT NULL,
+  `status_id` VARCHAR(20) DEFAULT NULL,
+  `party_id` VARCHAR(20) DEFAULT NULL,
+  `currency_uom_id` VARCHAR(20) DEFAULT NULL,
+  `product_store_id` VARCHAR(20) DEFAULT NULL,
+  `sales_channel_enum_id` VARCHAR(20) DEFAULT NULL,
+  `grand_total` DECIMAL(24,4) DEFAULT NULL,
+  `completed_date` DATETIME DEFAULT NULL,
+  PRIMARY KEY (`order_id`));
+
+
+ALTER TABLE `order_header`
+ADD CONSTRAINT `order_customer_fk`
+FOREIGN KEY (`party_id`)
+REFERENCES `party`(`party_id`);
+
+
+ALTER TABLE order_header
+ADD COLUMN credit_card VARBINARY(255);
+
+
+Table: order_item
+
+CREATE TABLE `restapi`.`order_item` (
+  `order_id` VARCHAR(20) NOT NULL,
+  `order_item_seq_id` VARCHAR(20) NOT NULL,
+  `product_id` VARCHAR(20) DEFAULT NULL,
+  `item_description` VARCHAR(255) DEFAULT NULL,
+  `quantity` DECIMAL(24,4) DEFAULT NULL,
+  `unit_amount` DECIMAL(24,4) DEFAULT NULL,
+  `item_type_enum_id` VARCHAR(20) DEFAULT NULL,
+  PRIMARY KEY (`order_id`, `order_item_seq_id`));
+
+
+ALTER TABLE `order_item`
+ADD CONSTRAINT `order_item_order_fk`
+FOREIGN KEY (`order_id`)
+REFERENCES `order_header`(`order_id`);
+
+ALTER TABLE `order_item`
+ADD CONSTRAINT `order_item_product_fk`
+FOREIGN KEY (`product_id`)
+REFERENCES `product`(`product_id`);
+
+
+Table: person
+
+CREATE TABLE `restapi`.`person` (
+  `party_id` VARCHAR(20) NOT NULL,
+  `first_name` VARCHAR(255) DEFAULT NULL,
+  `middle_name` VARCHAR(255) DEFAULT NULL,
+  `last_name` VARCHAR(255) DEFAULT NULL,
+  `gender` CHAR(1) DEFAULT NULL,
+  `birth_date` DATE DEFAULT NULL,
+  `marital_status_enum_id` VARCHAR(20) DEFAULT NULL,
+  `employment_status_enum_id` VARCHAR(20) DEFAULT NULL,
+  `occupation` VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY (`party_id`));
+
+
+ALTER TABLE `person`
+ADD CONSTRAINT `person_ibfk_1`
+FOREIGN KEY (`party_id`)
+REFERENCES `party`(`party_id`);
+
+
+Table: party
+
+CREATE TABLE `restapi`.`party` (
+  `party_id` VARCHAR(20) NOT NULL,
+  `party_enum_type_id` VARCHAR(20) DEFAULT NULL,
+  PRIMARY KEY (`party_id`)
+);
+
+Table: product
+
+CREATE TABLE `restapi`.`product` (
+  `product_id` VARCHAR(20) NOT NULL,
+  `party_id` VARCHAR(20) DEFAULT NULL,
+  `product_name` VARCHAR(255) DEFAULT NULL,
+  `description` VARCHAR(1000) DEFAULT NULL,
+  `charge_shipping` CHAR(1) DEFAULT NULL,
+  `returnable` CHAR(1) DEFAULT NULL,
+  PRIMARY KEY (`product_id`)
+);
+
+
+ALTER TABLE `product`
+ADD CONSTRAINT `product_owner_fk`
+FOREIGN KEY (`party_id`)
+REFERENCES `party`(`party_id`);
+
+
+

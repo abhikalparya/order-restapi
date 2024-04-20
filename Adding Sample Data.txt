@@ -1,0 +1,88 @@
+Sample Party Data
+
+"party": {
+    "party_id": "P1000"
+    "party_enum_type_id": "PERSON"
+  }
+
+INSERT INTO party (party_id, party_enum_type_id) VALUES ('P1000', 'PERSON');
+INSERT INTO party (party_id, party_enum_type_id) VALUES ('P1001', 'PERSON');
+INSERT INTO party (party_id, party_enum_type_id) VALUES ('P1002', 'PERSON');
+INSERT INTO party (party_id, party_enum_type_id) VALUES ('P1003', 'PERSON');
+
+
+Sample Party Person Data
+
+ {
+  "party": {
+    "partyId": "P1001",
+    "partyTypeEnumId": "PERSON",
+    "person": {
+      "party_id": 1,
+      "first_name": "Alice",
+      "middle_name": "Marie",
+      "last_name": "Smith",
+      "gender": "F",
+      "birth_date": "1995-08-20",
+      "marital_status_enum_id": "SINGLE",
+      "employment_status_enum_id": "EMPLOYED",
+      "occupation": "Data Scientist"
+    }
+  }
+}
+
+ {
+  "party": {
+    "partyId": "P1002",
+    "partyTypeEnumId": "PERSON",
+    "person": {
+      "party_id": 1,
+      "first_name": "Joe",
+      "middle_name": "D",
+      "last_name": "Jackson",
+      "gender": "M",
+      "birth_date": "1998-08-23",
+      "marital_status_enum_id": "SINGLE",
+      "employment_status_enum_id": "EMPLOYED",
+      "occupation": "Data Scientist"
+    }
+  }
+}
+
+
+ "Product": {
+  "product_id": PD1001,
+  "party_id": P1001,
+  "product_name": "Smartphone X",
+  "description": "High-end smartphone with advanced features",
+  "charge_shipping": "Y",
+  "returnable": "Y"
+}
+ "Product": {
+  "product_id": PD1002,
+  "party_id": P1002,
+  "product_name": "Laptop Pro",
+  "description": "Powerful laptop for professional use",
+  "charge_shipping": "Y",
+  "returnable": "Y"
+}
+ "Product": {
+  "product_id": PD1003,
+  "party_id": P1003,
+  "product_name": "Mac Book",
+  "description": "High-end device with advanced features",
+  "charge_shipping": "Y",
+  "returnable": "N"
+}
+
+Person Table: 
+INSERT INTO person (party_id, first_name, middle_name, last_name, gender, birth_date, marital_status_enum_id, employment_status_enum_id, occupation) VALUES 
+('P1001', 'Alice', 'Marie', 'Smith', 'F', '1995-08-20', 'SINGLE', 'EMPLOYED', 'Data Scientist'),
+('P1002', 'Joe', 'D', 'Jackson', 'M', '1998-08-23', 'SINGLE', 'EMPLOYED', 'Data Scientist');
+
+Product Table:
+INSERT INTO product (product_id, party_id, product_name, description, charge_shipping, returnable) VALUES 
+('PD1001', 'P1001', 'Smartphone X', 'High-end smartphone with advanced features', 'Y', 'Y'),
+('PD1002', 'P1002', 'Laptop Pro', 'Powerful laptop for professional use', 'Y', 'Y'),
+('PD1003', 'P1003', 'Mac Book', 'High-end device with advanced features', 'Y', 'N');
+
